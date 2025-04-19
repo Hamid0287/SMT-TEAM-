@@ -114,13 +114,6 @@
       cursor: pointer;
     }
 
-    .whatsapp-btn-container {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 20px;
-      margin-top: 10px;
-    }
-
     .whatsapp-btn {
       text-align: center;
       background: #00cc00;
@@ -129,7 +122,6 @@
       font-weight: bold;
       text-decoration: none;
       border-top: 1px solid #00ff00;
-      width: 48%;
     }
 
     .whatsapp-btn:hover {
@@ -157,29 +149,6 @@
     .mode-toggle:hover {
       background: #333;
     }
-
-    .contact-list {
-      display: flex;
-      flex-direction: column;
-      margin: 20px auto;
-      padding: 10px;
-      max-width: 500px;
-    }
-
-    .contact {
-      background: #004d00;
-      color: #fff;
-      padding: 15px;
-      margin: 5px;
-      border-radius: 8px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .contact:hover {
-      background: #009900;
-    }
   </style>
 </head>
 <body>
@@ -194,19 +163,7 @@
       <input type="text" id="message" placeholder="Type your message..." oninput="showTyping()" />
       <button onclick="sendMessage()">CHAT SEND</button>
     </div>
-
-    <div class="contact-list">
-      <!-- Add contacts here -->
-      <div class="contact" onclick="openChat('923259421220')">Hamid Ali</div>
-      <div class="contact" onclick="openChat('923259421221')">Ali Shah</div>
-      <div class="contact" onclick="openChat('923259421222')">Sarah Khan</div>
-      <!-- Add more contacts here -->
-    </div>
-
-    <div class="whatsapp-btn-container">
-      <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT</a>
-      <a class="whatsapp-btn" href="https://wa.me/923259421220?text=Hello" target="_blank">CHAT</a>
-    </div>
+    <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT ON ADMIN</a>
   </div>
 
   <!-- Firebase SDK -->
@@ -276,11 +233,6 @@
       document.body.classList.toggle("light-mode");
       const toggleBtn = document.querySelector(".mode-toggle");
       toggleBtn.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️";
-    }
-
-    function openChat(number) {
-      const chatUrl = `https://wa.me/${number}`;
-      window.open(chatUrl, '_blank'); // Opens WhatsApp chat for the contact
     }
   </script>
 </body>
