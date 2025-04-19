@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,7 +11,7 @@
       margin: 0;
       font-family: 'Roboto Mono', monospace;
       background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYTfJjQ75gUVefaJvIpJIcHY1RlVLie8gXJvQ3kbKMpAWVGGjUO70z1Vr8&s=10') no-repeat center center fixed;
-      background-size: cover; /* Ensures the background covers the entire screen */
+      background-size: cover;
       color: #00ff00;
       transition: background 0.5s, color 0.5s;
     }
@@ -148,6 +148,19 @@
     .mode-toggle:hover {
       background: #333;
     }
+
+    .voice-btn {
+      background: #ff6600;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
   </style>
 </head>
 <body>
@@ -161,9 +174,9 @@
     <div class="input-area">
       <input type="text" id="message" placeholder="Type your message..." oninput="showTyping()" />
       <button onclick="sendMessage()">CHAT SEND</button>
-      <button onclick="recordVoice()">🎙️</button>
+      <div class="voice-btn" onclick="recordVoice()">🎙️</div>
     </div>
-    <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank"> CONTACT ON ADMIN</a>
+    <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT ON ADMIN</a>
   </div>
 
   <!-- Firebase SDK -->
