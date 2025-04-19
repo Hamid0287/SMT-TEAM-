@@ -1,0 +1,268 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GROUP WORLD CHAT</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYTfJjQ75gUVefaJvIpJIcHY1RlVLie8gXJvQ3kbKMpAWVGGjUO70z1Vr8&s=10') no-repeat center center fixed;
+      background-size: cover; /* Ensures the background covers the entire screen */
+      color: #00ff00;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .light-mode {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .light-mode .chat-container {
+      background: #f0f0f0;
+      border-color: #ccc;
+      box-shadow: 0 0 10px #aaa;
+    }
+
+    .chat-container {
+      max-width: 500px;
+      margin: 20px auto;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ff00;
+      display: flex;
+      flex-direction: column;
+      height: 90vh;
+    }
+
+    .chat-header {
+      background: #001100;
+      color: #00ff00;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    #chat-box {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      clear: both;
+      word-wrap: break-word;
+    }
+
+    .message.you {
+      background: #004d00;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .message.other {
+      background: #002200;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .sender {
+      font-size: 12px;
+      font-weight: bold;
+      color: #33ff33;
+    }
+
+    .typing {
+      font-style: italic;
+      font-size: 14px;
+      padding: 5px 10px;
+      color: #66ff66;
+    }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid #00ff00;
+      background: #001a00;
+    }
+
+    input {
+      flex: 1;
+      padding: 15px;
+      font-size: 16px;
+      background: #000;
+      color: #00ff00;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      background: #00cc00;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .whatsapp-btn {
+      text-align: center;
+      background: #00cc00;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      border-top: 1px solid #00ff00;
+    }
+
+    .whatsapp-btn:hover {
+      background: #009900;
+    }
+
+    .mode-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 45px;
+      height: 45px;
+      background: #222;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    .mode-toggle:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mode-toggle" onclick="toggleMode()" title="Toggle Dark/Light Mode">☀️</div>
+
+  <div class="chat-container">
+    <div class="chat-header">GROUP WORLD CHAT - HAMID ALI</div>
+    <div id="chat-box"></div>
+    <div class="typing" id="typing-status"></div>
+    <div class="input-area">
+      <input type="text" id="message" placeholder="Type your message..." oninput="showTyping()" />
+      <button onclick="sendMessage()">CHAT SEND</button>
+      <button onclick="recordVoice()">🎙️</button>
+    </div>
+    <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank"> CONTACT ON ADMIN</a>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    firebase.auth().signInAnonymously().catch(console.error);
+
+    let username = localStorage.getItem("chat_username");
+    if (!username) {
+      username = prompt("Enter your hacker name:");
+      localStorage.setItem("chat_username", username || "Anonymous");
+    }
+
+    function sendMessage() {
+      const msg = document.getElementById("message").value.trim();
+      if (msg) {
+        db.ref("messages").push({
+          name: username,
+          text: msg,
+          time: Date.now()
+        });
+        db.ref("typing").remove();
+        document.getElementById("message").value = '';
+      }
+    }
+
+    function showTyping() {
+      db.ref("typing").set(username);
+      setTimeout(() => db.ref("typing").remove(), 3000);
+    }
+
+    db.ref("messages").on("child_added", snapshot => {
+      const data = snapshot.val();
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "message " + (data.name === username ? "you" : "other");
+      msgDiv.innerHTML = `<div class="sender">${data.name}</div>${data.text}`;
+      document.getElementById("chat-box").appendChild(msgDiv);
+      document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+    });
+
+    db.ref("typing").on("value", snapshot => {
+      const typer = snapshot.val();
+      if (typer && typer !== username) {
+        document.getElementById("typing-status").innerText = `${typer} is typing...`;
+      } else {
+        document.getElementById("typing-status").innerText = '';
+      }
+    });
+
+    // Voice Recording Logic
+    let mediaRecorder;
+    let audioChunks = [];
+
+    async function recordVoice() {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audio.controls = true;
+
+        const div = document.createElement("div");
+        div.className = "message you";
+        div.innerHTML = `<div class="sender">${username}</div>`;
+        div.appendChild(audio);
+        document.getElementById("chat-box").appendChild(div);
+        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+
+        audioChunks = [];
+      };
+
+      mediaRecorder.start();
+      setTimeout(() => mediaRecorder.stop(), 5000);
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("light-mode");
+      const toggleBtn = document.querySelector(".mode-toggle");
+      toggleBtn.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️";
+    }
+  </script>
+</body>
+</html>
