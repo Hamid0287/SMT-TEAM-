@@ -75,6 +75,13 @@
       text-align: left;
     }
 
+    .message.voice {
+      background: #006600;
+      margin: 5px auto;
+      text-align: center;
+      max-width: 80%;
+    }
+
     .sender {
       font-size: 12px;
       font-weight: bold;
@@ -92,6 +99,7 @@
       display: flex;
       border-top: 1px solid #00ff00;
       background: #001a00;
+      padding: 10px 0;
     }
 
     input {
@@ -150,7 +158,7 @@
     }
 
     .voice-btn {
-      background: #ff6600;
+      background: #00cc00;
       border: none;
       color: white;
       padding: 15px 20px;
@@ -160,6 +168,8 @@
       justify-content: center;
       align-items: center;
       border-radius: 50%;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -174,11 +184,11 @@
     <div class="input-area">
       <input type="text" id="message" placeholder="Type your message..." oninput="showTyping()" />
       <button onclick="sendMessage()">CHAT SEND</button>
-      <div class="voice-btn" 
-           onmousedown="startRecording()" 
-           onmouseup="stopRecording()" 
-           onmouseleave="stopRecording()">🎙️</div>
     </div>
+    <div class="voice-btn" 
+         onmousedown="startRecording()" 
+         onmouseup="stopRecording()" 
+         onmouseleave="stopRecording()">🎙️</div>
     <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT ON ADMIN</a>
   </div>
 
@@ -267,7 +277,7 @@
         audio.controls = true;
 
         const div = document.createElement("div");
-        div.className = "message you";
+        div.className = "message voice you";
         div.innerHTML = `<div class="sender">${username}</div>`;
         div.appendChild(audio);
         document.getElementById("chat-box").appendChild(div);
