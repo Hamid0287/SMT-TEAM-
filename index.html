@@ -174,7 +174,10 @@
     <div class="input-area">
       <input type="text" id="message" placeholder="Type your message..." oninput="showTyping()" />
       <button onclick="sendMessage()">CHAT SEND</button>
-      <div class="voice-btn" onclick="recordVoice()">🎙️</div>
+      <div class="voice-btn" 
+           onmousedown="startRecording()" 
+           onmouseup="stopRecording()" 
+           onmouseleave="stopRecording()">🎙️</div>
     </div>
     <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT ON ADMIN</a>
   </div>
@@ -246,11 +249,17 @@
     let mediaRecorder;
     let audioChunks = [];
 
-    async function recordVoice() {
+    async function startRecording() {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
 
       mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.start();
+    }
+
+    function stopRecording() {
+      mediaRecorder.stop();
+
       mediaRecorder.onstop = () => {
         const blob = new Blob(audioChunks, { type: 'audio/webm' });
         const url = URL.createObjectURL(blob);
@@ -266,9 +275,6 @@
 
         audioChunks = [];
       };
-
-      mediaRecorder.start();
-      setTimeout(() => mediaRecorder.stop(), 5000);
     }
 
     function toggleMode() {
