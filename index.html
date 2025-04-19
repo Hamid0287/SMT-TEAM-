@@ -75,13 +75,6 @@
       text-align: left;
     }
 
-    .message.voice {
-      background: #006600;
-      margin: 5px auto;
-      text-align: center;
-      max-width: 80%;
-    }
-
     .sender {
       font-size: 12px;
       font-weight: bold;
@@ -121,6 +114,13 @@
       cursor: pointer;
     }
 
+    .whatsapp-btn-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+
     .whatsapp-btn {
       text-align: center;
       background: #00cc00;
@@ -129,6 +129,7 @@
       font-weight: bold;
       text-decoration: none;
       border-top: 1px solid #00ff00;
+      width: 48%;
     }
 
     .whatsapp-btn:hover {
@@ -157,20 +158,6 @@
       background: #333;
     }
 
-    .voice-btn {
-      background: #00cc00;
-      border: none;
-      color: white;
-      padding: 15px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      margin-top: 10px;
-      margin-bottom: 20px;
-    }
   </style>
 </head>
 <body>
@@ -185,11 +172,12 @@
       <input type="text" id="message" placeholder="Type your message..." oninput="showTyping()" />
       <button onclick="sendMessage()">CHAT SEND</button>
     </div>
-    <div class="voice-btn" 
-         onmousedown="startRecording()" 
-         onmouseup="stopRecording()" 
-         onmouseleave="stopRecording()">🎙️</div>
-    <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT ON ADMIN</a>
+
+    <div class="whatsapp-btn-container">
+      <a class="whatsapp-btn" href="https://wa.me/923259421220" target="_blank">CONTACT</a>
+      <a class="whatsapp-btn" href="https://wa.me/923259421220?text=Hello" target="_blank">CHAT</a>
+    </div>
+
   </div>
 
   <!-- Firebase SDK -->
@@ -254,38 +242,6 @@
         document.getElementById("typing-status").innerText = '';
       }
     });
-
-    // Voice Recording Logic
-    let mediaRecorder;
-    let audioChunks = [];
-
-    async function startRecording() {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-
-      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-      mediaRecorder.start();
-    }
-
-    function stopRecording() {
-      mediaRecorder.stop();
-
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(audioChunks, { type: 'audio/webm' });
-        const url = URL.createObjectURL(blob);
-        const audio = new Audio(url);
-        audio.controls = true;
-
-        const div = document.createElement("div");
-        div.className = "message voice you";
-        div.innerHTML = `<div class="sender">${username}</div>`;
-        div.appendChild(audio);
-        document.getElementById("chat-box").appendChild(div);
-        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-
-        audioChunks = [];
-      };
-    }
 
     function toggleMode() {
       document.body.classList.toggle("light-mode");
