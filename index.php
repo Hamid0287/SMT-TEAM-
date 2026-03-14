@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIM & CNIC Details - Shadow Innovations</title>
+  <style>
+    :root {
+      --primary: #c8102e;
+      --primary-dark: #a00d24;
+      --light: #ffffff;
+      --bg: #f8f9fa;
+      --result-bg: #fff5f5;
+      --result-text: #111;
+      --table-header: #ffebee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, var(--bg), #e8ecef);
+      margin: 0;
+      padding: 16px 10px;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 2.2rem 1.2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+      font-weight: 600;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      opacity: 0.95;
+    }
+
+    .content {
+      padding: clamp(1.2rem, 5vw, 2rem);
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 460px;
+      padding: 14px 16px;
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(200,16,46,0.15);
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 2.8rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      touch-action: manipulation;
+    }
+
+    button:hover,
+    button:active {
+      background: var(--primary-dark);
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 1.5rem auto;
+      max-width: 500px;
+      font-size: 0.98rem;
+    }
+
+    .result-box {
+      background: var(--result-bg);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: clamp(1.2rem, 4vw, 1.8rem);
+      margin: 1.8rem 0;
+      box-shadow: 0 6px 20px rgba(200, 16, 46, 0.15);
+      color: var(--result-text);
+    }
+
+    .result-box h2 {
+      color: var(--primary);
+      margin: 0 0 1.2rem;
+      font-size: clamp(1.4rem, 5vw, 1.7rem);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1.2rem 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      min-width: 580px;           /* forces horizontal scroll on very small screens */
+      border-collapse: collapse;
+      background: white;
+      border: 1px solid #eee;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.97rem;
+    }
+
+    th {
+      background: var(--table-header);
+      font-weight: 600;
+      color: #c8102e;
+      white-space: nowrap;
+    }
+
+    .network-logo {
+      max-height: 60px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .channels {
+      margin: 2.5rem 0 1.5rem;
+      text-align: center;
+    }
+
+    .channel-btn {
+      background: #25D366;
+      margin: 12px 10px;
+      padding: 14px 2.2rem;
+      font-size: clamp(0.98rem, 4vw, 1.05rem);
+      border-radius: 30px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .channel-btn:hover {
+      background: #128C7E;
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 12px 8px; }
+      .content { padding: 1.2rem 1rem; }
+      button { padding: 13px 2.2rem; width: 100%; max-width: 320px; }
+      .channel-btn { display: block; margin: 12px auto; width: 100%; max-width: 340px; }
+      th, td { padding: 10px 8px; font-size: 0.94rem; }
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 2.5rem 3rem; }
+      input[type="text"] { font-size: 1.15rem; padding: 16px 20px; }
+      button { font-size: 1.15rem; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Shadow Innovations</h1>
+    <p>USMAN SARKAR – SIM & CNIC DETAILS</p>
+  </div>
+
+  <div class="content">
+    
+    <form method="POST" class="center">
+      <input type="hidden" name="csrf_token" value="62f5405af5913f3b0b305ffa448d049ea29d6ec5e11975dfae6e7d5a95cdc4c1">
+      <div class="form-group">
+        <input type="text" name="query" placeholder="Mobile (03338570120) or CNIC (13 digits)"
+               value="" required>
+      </div>
+      <button type="submit">Search</button>
+    </form>
+
+    
+    <div class="channels">
+      <h3 style="margin-bottom:1.4rem; color:#444;">Join Our Official WhatsApp Channels</h3>
+      <a href="https://whatsapp.com/channel/0029VbB4fv09WtBwGMF6sz1Y" target="_blank" class="channel-link">
+        <button class="channel-btn">JOIN SHADOW INNOVATIONS WHATSAPP</button>
+      </a>
+      <a href="https://whatsapp.com/channel/0029Vb5h27MICVfc8QqPbK3y" target="_blank" class="channel-link">
+        <button class="channel-btn">JOIN USMAN SARKAR WHATSAPP</button>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 Shadow Innovations • All Rights Reserved • Powered By Shadow DataBase
+  </footer>
+</div>
+
+<script>
+function downloadImage() {
+  const box = document.getElementById('resultBox');
+  if (!box) {
+    alert('No results available to download.');
+    return;
+  }
+  html2canvas(box, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'sim-cnic-details.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }).catch(err => {
+    alert('Failed to create image: ' + err.message);
+  });
+}
+</script>
+</body>
+</html>
