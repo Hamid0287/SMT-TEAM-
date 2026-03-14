@@ -1,236 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamid Sim Data | Advance Sim Tracker</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-red: #e63946;
-            --dark-bg: #1a1a2e;
-            --card-bg: #ffffff;
-            --accent: #0f3460;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIM & CNIC Details - Ibrahim Sim DataBase</title>
+  <style>
+    :root {
+      --primary: #c8102e;
+      --primary-dark: #a00d24;
+      --light: #ffffff;
+      --bg: #f8f9fa;
+      --result-bg: #fff5f5;
+      --result-text: #111;
+      --table-header: #ffebee;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            background-color: #f0f2f5; 
-            font-family: 'Poppins', sans-serif;
-            color: #333;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        /* Hero Header */
-        .header {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #16213e 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--primary-red);
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, var(--bg), #e8ecef);
+      margin: 0;
+      padding: 16px 10px;
+      color: #222;
+      line-height: 1.5;
+    }
 
-        .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            color: var(--primary-red);
-        }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-Ibrahim: 0 10px 30px rgba(0,0,0,0.12);
+    }
 
-        .header p { opacity: 0.8; font-weight: 300; letter-spacing: 1px; }
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 2.2rem 1.2rem;
+      text-align: center;
+    }
 
-        .container {
-            width: 95%;
-            max-width: 800px;
-            margin: -40px auto 40px auto;
-        }
+    .header h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+      font-weight: 600;
+    }
 
-        /* Search Section */
-        .search-box {
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+    .header p {
+      margin: 8px 0 0;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      opacity: 0.95;
+    }
 
-        .input-wrapper {
-            position: relative;
-            margin-bottom: 20px;
-        }
+    .content {
+      padding: clamp(1.2rem, 5vw, 2rem);
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 18px 20px;
-            border: 2px solid #e1e8ef;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            outline: none;
-        }
+    .form-group {
+      margin-bottom: 1.8rem;
+      text-align: center;
+    }
 
-        input[type="text"]:focus {
-            border-color: var(--primary-red);
-            box-shadow: 0 0 10px rgba(230, 57, 70, 0.1);
-        }
+    input[type="text"] {
+      width: 100%;
+      max-width: 460px;
+      padding: 14px 16px;
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
+    }
 
-        .btn-search {
-            width: 100%;
-            background: var(--primary-red);
-            color: white;
-            padding: 18px;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.4s;
-            text-transform: uppercase;
-        }
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-Ibrahim: 0 0 0 3px rgba(200,16,46,0.15);
+    }
 
-        .btn-search:hover {
-            background: #c1272d;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
-        }
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 2.8rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      touch-action: manipulation;
+    }
 
-        /* WhatsApp Branding */
-        .whatsapp-channel {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-weight: bold;
-            transition: 0.3s;
-            border: 2px solid transparent;
-        }
+    button:hover,
+    button:active {
+      background: var(--primary-dark);
+    }
 
-        .whatsapp-channel:hover {
-            background: white;
-            color: #25D366;
-            border-color: #25D366;
-        }
+    .center {
+      text-align: center;
+    }
 
-        .whatsapp-channel i { font-size: 24px; margin-right: 12px; }
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 1.5rem auto;
+      max-width: 500px;
+      font-size: 0.98rem;
+    }
 
-        /* Result Design */
-        .result-wrapper {
-            margin-top: 30px;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            border-left: 8px solid var(--primary-red);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
+    .result-box {
+      background: var(--result-bg);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: clamp(1.2rem, 4vw, 1.8rem);
+      margin: 1.8rem 0;
+      box-Ibrahim: 0 6px 20px rgba(200, 16, 46, 0.15);
+      color: var(--result-text);
+    }
 
-        .result-banner {
-            background: #f8f9fa;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-        }
+    .result-box h2 {
+      color: var(--primary);
+      margin: 0 0 1.2rem;
+      font-size: clamp(1.4rem, 5vw, 1.7rem);
+    }
 
-        .result-banner span { font-weight: 700; color: var(--dark-bg); }
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1.2rem 0;
+      -webkit-overflow-scrolling: touch;
+    }
 
-        .info-grid {
-            padding: 20px 25px;
-        }
+    table {
+      width: 100%;
+      min-width: 580px;           /* forces horizontal scroll on very small screens */
+      border-collapse: collapse;
+      background: white;
+      border: 1px solid #eee;
+    }
 
-        .info-item {
-            display: flex;
-            padding: 12px 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.97rem;
+    }
 
-        .info-item:last-child { border: none; }
+    th {
+      background: var(--table-header);
+      font-weight: 600;
+      color: #c8102e;
+      white-space: nowrap;
+    }
 
-        .label { width: 35%; color: #888; font-size: 13px; font-weight: 600; text-transform: uppercase; }
-        .value { width: 65%; color: #222; font-weight: 500; font-size: 15px; }
+    .network-logo {
+      max-height: 60px;
+      margin: 20px auto;
+      display: block;
+    }
 
-        .btn-action {
-            display: block;
-            width: fit-content;
-            margin: 15px auto;
-            background: var(--accent);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-        }
+    .channels {
+      margin: 2.5rem 0 1.5rem;
+      text-align: center;
+    }
 
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-            font-size: 14px;
-        }
+    .channel-btn {
+      background: #25D366;
+      margin: 12px 10px;
+      padding: 14px 2.2rem;
+      font-size: clamp(0.98rem, 4vw, 1.05rem);
+      border-radius: 30px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      text-decoration: none;
+    }
 
-        .footer strong { color: var(--primary-red); }
+    .channel-btn:hover {
+      background: #128C7E;
+    }
 
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.8rem; }
-            .info-item { flex-direction: column; }
-            .label { width: 100%; margin-bottom: 2px; }
-            .value { width: 100%; }
-        }
-    </style>
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 12px 8px; }
+      .content { padding: 1.2rem 1rem; }
+      button { padding: 13px 2.2rem; width: 100%; max-width: 320px; }
+      .channel-btn { display: block; margin: 12px auto; width: 100%; max-width: 340px; }
+      th, td { padding: 10px 8px; font-size: 0.94rem; }
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 2.5rem 3rem; }
+      input[type="text"] { font-size: 1.15rem; padding: 16px 20px; }
+      button { font-size: 1.15rem; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
+<div class="container">
+  <div class="header">
+    <h1>Ibrahim Sim DataBase</h1>
+    <p>IBRAHIM – SIM & CNIC DETAILS</p>
+  </div>
 
-    <div class="header">
-        <h1>HAMID SIM DATA</h1>
-        <p>Secure Search by HAMID ALI</p>
+  <div class="content">
+    
+    <form method="POST" class="center">
+      <input type="hidden" name="csrf_token" value="62f5405af5913f3b0b305ffa448d049ea29d6ec5e11975dfae6e7d5a95cdc4c1">
+      <div class="form-group">
+        <input type="text" name="query" placeholder="Mobile (03000000000) or CNIC (13 digits)"
+               value="" required>
+      </div>
+      <button type="submit">Search</button>
+    </form>
+     
     </div>
+  </div>
 
-    <div class="container">
-        <div class="search-box">
-            <form method="GET">
-                <input type="hidden" name="csrf_token" value="cd3db0449d1a96c49275e2c00ce6603567dde244ee6db1aa45d970729b676829">
-                <div class="input-wrapper">
-                    <input type="text" name="num" placeholder="03XXXXXXXXX / CNIC (No Dashes)" value="" required>
-                </div>
-                <button type="submit" class="btn-search"><i class="fa fa-crosshairs"></i> Search Database</button>
-            </form>
+  <footer>
+    © 2026 Ibrahim Sim DataBase • All Rights Reserved • Powered By Ibrahim DataBase
+  </footer>
+</div>
 
-            <a href="https://whatsapp.com/channel/0029VbB4fv09WtBwGMF6sz1Y" target="_blank" class="whatsapp-channel">
-                <i class="fab fa-whatsapp"></i> JOIN OUR OFFICIAL WHATSAPP CHANNEL
-            </a>
-        </div>
-
-        
-        <div class="footer">
-            Developed & Secured by <strong>Hamid Sim Data</strong><br>
-            &copy; 2024-2025 All Rights Reserved.
-        </div>
-    </div>
-
-    <script>
-        function saveRecord(id) {
-            const node = document.getElementById('rec-' + id);
-            html2canvas(node, {
-                scale: 3,
-                backgroundColor: '#f0f2f5'
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/png');
-                link.download = 'Hamid_Record_' + Date.now() + '.png';
-                link.click();
-            });
-        }
-    </script>
+<script>
+function downloadImage() {
+  const box = document.getElementById('resultBox');
+  if (!box) {
+    alert('No results available to download.');
+    return;
+  }
+  html2canvas(box, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'sim-cnic-details.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }).catch(err => {
+    alert('Failed to create image: ' + err.message);
+  });
+}
+</script>
 </body>
 </html>
